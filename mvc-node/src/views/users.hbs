@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Пользователи</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+<h1>Создать нового пользователя</h1>
+<form action="/users/create" method="POST">
+    <label>Имя</label>
+    <input name="username" /><br><br>
+    <label>Возраст</label>
+    <input name="age" type="number" min="1" max="110" /><br><br>
+    <input type="submit" value="Отправить" />
+</form>
+<h1>Список пользователей</h1>
+{{#each users}}
+    <div style="border: 1px solid green; padding: 15px">
+        <h3>Username - {{this.username}}</h3>
+        <p>Возраст - {{this.age}}</p>
+        <button onclick="removeById({{this.id}})">
+            Удалить
+        </button>
+    </div>
+{{/each}}
+<script>
+    function removeById(id)  {
+        fetch(`http://localhost:5000/users/remove?id=${id}`, {
+            method: 'DELETE'
+        }).then(() => window.location.reload())
+    }
+</script>
+</body>
+<html>
